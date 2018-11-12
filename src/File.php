@@ -46,7 +46,7 @@ class File
      */
     public function type()
     {
-        if ( DS == "/" ) {
+        if ( self::DS == "/" ) {
             return "linux";
         } else {
             return "windows";
@@ -299,7 +299,7 @@ class File
      */
     public function isUpadate($filename)
     {
-        /*
+       
         if (file_exists($filename)) {
             $mtime = \filemtime($filename);
             $atime = \fileatime($filename);
@@ -318,7 +318,7 @@ class File
         } else {
             return -1;
         }
-        */
+        
     }
 
     /**
