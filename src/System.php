@@ -12,122 +12,10 @@ namespace Jiny\Filesystem;
 /**
  * 싱글톤
  */
-class File
+class System
 {
     const DS = DIRECTORY_SEPARATOR;
     const PS = PATH_SEPARATOR;
-
-    /**
-     * 운영체제 타입확인
-     */
-    public static function os()
-    {
-        if ( self::DS == "/" ) {
-            return "linux";
-        } else {
-            return "windows";
-        }
-    }
-
-    // -----
-
-    /**
-     * 현재의 경로를 읽어 옵니다.
-     */
-    public static function current()
-    {
-        return getcwd();
-    }
-
-    public static function basePath($path, $base = null)
-    {
-        if ($base) {
-            return ltrim($path, $base);
-        }
-
-        return $path;
-    }
-
-    /**
-     * 경로에서 디렉토리를 추출합니다.
-     */
-    public static function pathDir($path)
-    {
-        return pathinfo($path)['dirname'];
-    }
-
-    /**
-     * 파일의 이름을 반환합니다.
-     */
-    public function pathFilename($path)
-    {
-        return pathinfo($path)['filename'];
-    }
-    
-    /**
-     * 파일의 확장자를 반환합니다.
-     */
-    public function pathExtension($path)
-    {
-        return pathinfo($path)['extension'];
-    }
-
-    /**
-     * 경로의 파일명을 추출합니다.
-     */
-    public function pathFile($path)
-    {
-        return pathinfo($path)['basename'];
-    }
-
-
-
-
-    // -----
-
-
-    /**
-     * 디렉토리 확인합니다.
-     */
-    public static function isDir($path)
-    {
-        return is_dir($path);
-    }
-
-    public static function isDirMake($path)
-    {
-        if (is_dir($path)) {
-            return true;
-        } else {
-            // 새로운 디렉토리를 생성합니다.
-            return self::mkdirRescure($path, $mode=777);
-        }
-    }
-
-    /**
-     * 디렉토리 생성
-     */
-    public static function mkdir($path, $mode=777)
-    {
-        return mkdir($path, $mode);
-    }
-
-    public static function isMkdir($path, $mode=777)
-    {
-        if(!self::isDir($path)) {
-            self::mkdir($path, $mode);
-        }
-    }
-
-    /**
-     * 서브디렉토리 생성
-     */
-    public function mkdirRescure($path, $mode=777)
-    {
-        return mkdir($path, $mode, true);
-    }
-
-
 
     public static $instance;
 
@@ -153,15 +41,29 @@ class File
         return self::$instance;
     }
 
-
-
-
+    /**
+     * 운영체제 타입확인
+     */
+    public function type()
+    {
+        if ( self::DS == "/" ) {
+            return "linux";
+        } else {
+            return "windows";
+        }
+    }
 
     // -----
     // 경로
     // -----
 
-    
+    /**
+     * 경로를 출력합니다.
+     */
+    public function path($path)
+    {
+        return pathinfo($path)['dirname'];
+    }
 
     /**
      * 현재위치에서, 입력한 경로를 추가합니다.
@@ -210,9 +112,29 @@ class File
     // 디렉토리
     // -----
 
-    
+    /**
+     * 디렉토리 확인합니다.
+     */
+    public function is_dir($path)
+    {
+        return is_dir($path);
+    }
 
+    /**
+     * 디렉토리 생성
+     */
+    public function mkdir($path, $mode=777)
+    {
+        return mkdir($path, $mode);
+    }
 
+    /**
+     * 서브디렉토리 생성
+     */
+    public function mkdir_sub($path, $mode=777)
+    {
+        return mkdir($path, $mode, true);
+    }
 
     /**
      * 디렉토리 삭제
@@ -280,7 +202,21 @@ class File
         return unlink($path);
     }
 
-    
+    /**
+     * 파일의 확장자를 반환합니다.
+     */
+    public function file_extension($path)
+    {
+        return pathinfo($path)['extension'];
+    }
+
+    /**
+     * 파일의 이름을 반환합니다.
+     */
+    public function file_name($path)
+    {
+        return pathinfo($path)['filename'];
+    }
 
 
     /**
