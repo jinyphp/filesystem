@@ -81,7 +81,10 @@ class File
     }
 
 
-
+    public static function pathImplode($arr)
+    {
+        return implode(self::DS, $arr);
+    }
 
     // -----
 
@@ -127,6 +130,18 @@ class File
         return mkdir($path, $mode, true);
     }
 
+
+    /**
+     * 파일을 읽어 옵니다.
+     */
+    public static function read($filename)
+    {
+        if (file_exists($filename)) {
+            return \file_get_contents($filename);
+        }
+
+        return false;
+    }
 
 
     public static $instance;
@@ -294,15 +309,7 @@ class File
         }
     }
 
-    /**
-     * 파일을 읽어 옵니다.
-     */
-    public function read($filename)
-    {
-        if (file_exists($filename)) {
-            return \file_get_contents($filename);
-        }
-    }
+
 
     /**
      * 배열(줄단위) 읽기
