@@ -29,7 +29,21 @@ class File
         }
     }
 
+    /**
+     * 운영체제에 맞게 path를 재조정합니다.
+     */
+    public static function osPath($path)
+    {
+        return str_replace("/", self::DS, $path);
+    }
+
     // -----
+
+    public static function path($path)
+    {
+        str_replace("/", self::DS, $path);
+        return rtrim($path, self::DS);
+    }
 
     /**
      * 현재의 경로를 읽어 옵니다.
@@ -59,7 +73,7 @@ class File
     /**
      * 파일의 이름을 반환합니다.
      */
-    public function pathFilename($path)
+    public function pathFileName($path)
     {
         return pathinfo($path)['filename'];
     }
@@ -130,6 +144,14 @@ class File
         return mkdir($path, $mode, true);
     }
 
+    public static function exists($file)
+    {
+        if (file_exists($file)) {
+            return true;
+        }
+
+        return false;
+    }
 
     /**
      * 파일을 읽어 옵니다.
