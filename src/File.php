@@ -165,6 +165,13 @@ class File
         return false;
     }
 
+    public static function json_get_contents($filename)
+    {
+        if (file_exists($filename)) {
+            return json_decode(\file_get_contents($filename));
+        }
+    }
+
 
     public static $instance;
 
