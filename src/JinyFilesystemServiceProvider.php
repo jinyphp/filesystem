@@ -20,15 +20,15 @@ class JinyFilesystemServiceProvider extends ServiceProvider
         $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
 
         Blade::component(\Jiny\Filesystem\View\Components\Dropzone::class, "dropzone");
-        //Blade::component('jinyfile::components.'.'dropzone', 'dropzone');
+        //Blade::component(\Jiny\Filesystem\View\Components\Directory::class, "directory");
+
     }
 
     public function register()
     {
         /* 라이브와이어 컴포넌트 등록 */
-
         $this->app->afterResolving(BladeCompiler::class, function () {
-
+            Livewire::component('FileDirectory', \Jiny\Filesystem\Http\Livewire\FileDirectory::class);
         });
 
     }

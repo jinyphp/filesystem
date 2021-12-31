@@ -12,13 +12,19 @@ class UploadController extends Controller
 
     }
 
-    public function dropzone(Request $reques)
+    public function dropzone(Request $requet)
     {
         $uploaded = [];
 
-        $path = public_path("uploads");
-        if($_POST['path']) $path .= DIRECTORY_SEPARATOR.$_POST['path'];
-        if (!is_dir($path)) mkdir($path);
+        if($_POST['path']) {
+            $path = public_path($_POST['path']);
+            $path = $_POST['path'];
+        } else {
+            $path = public_path("uploads");
+        }
+        //return response()->json($path);
+
+        if (!is_dir($path)) mkdir($path, 755, true);
 
         if (!empty($_FILES['file']['name'][0])) {
             foreach ($_FILES['file']['name'] as $pos => $name) {

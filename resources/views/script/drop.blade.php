@@ -1,10 +1,3 @@
-<form>
-    @csrf
-    <div {{ $attributes->merge(['class'=>"dropzone", 'id'=>"dropzone"]) }} data-path="{{$path}}">
-        {{$slot}}
-    </div>
-</form>
-
 <section class="progress-area"></section>
 <ul class="uploaded-area"></ul>
 
@@ -108,10 +101,6 @@
 @endpush
 
 @push('scripts')
-    <script>
-        var path = "{!! $path !!}";
-    </script>
-
     <script>
         var dropzone = document.querySelectorAll(".dropzone");
         // var dropzone = document.getElementById('dropzone');

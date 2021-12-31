@@ -11,7 +11,7 @@
 
 
         <!-- dropzone -->
-        <x-dropzone path="aaa">
+        <x-dropzone path="images/themes">
             Dropzone
         </x-dropzone>
 
