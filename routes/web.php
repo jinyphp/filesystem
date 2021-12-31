@@ -8,3 +8,12 @@ Route::middleware(['web','auth:sanctum', 'verified'])
 ->prefix('/admin/files')->group(function () {
     Route::resource('dropzone', \Jiny\Filesystem\Http\Controllers\Admin\DropzoneController::class);
 });
+
+
+use Jiny\Filesystem\Http\Controllers\Admin\UploadController;
+Route::middleware(['web'])
+->group(function(){
+    Route::post('/api/upload/drop',[UploadController::class,"dropzone"]);
+});
+
+

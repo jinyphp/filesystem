@@ -19,6 +19,8 @@ class JinyFilesystemServiceProvider extends ServiceProvider
         // 데이터베이스
         $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
 
+        Blade::component(\Jiny\Filesystem\View\Components\Dropzone::class, "dropzone");
+        //Blade::component('jinyfile::components.'.'dropzone', 'dropzone');
     }
 
     public function register()
