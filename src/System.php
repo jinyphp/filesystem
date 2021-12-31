@@ -35,7 +35,7 @@ class System
     public static function init($path=null)
     {
         if (!self::$instance) {
-            self::$instance = new self();  
+            self::$instance = new self();
         }
 
         return self::$instance;
@@ -96,7 +96,7 @@ class System
                 }
             } else {
                 unset($path[$i]);
-            }            
+            }
         }
 
         $arr = \array_merge($base, $path);
@@ -143,7 +143,7 @@ class System
     {
         if (is_dir($path)) {
             return rmdir($path);
-        }        
+        }
     }
 
     /**
@@ -164,7 +164,7 @@ class System
                     unlink($dir);
                 }
             }
-            
+
             return rmdir($path);
         }
     }
@@ -225,7 +225,7 @@ class System
     public function symlink($src, $dst)
     {
         // 리눅스 운영체제 일경우에만 동작을 처리합니다.
-        if ( DS == "/" ) {
+        if ( DIRECTORY_SEPARATOR == "/" ) {
             return symlink($src, $dst);
         }
     }
@@ -279,11 +279,11 @@ class System
                 }
                 fclose($fp);
             }
-        } 
+        }
         // 새파일 저장
         else {
             return \file_put_contents($filename, $content);
-        }        
+        }
     }
 
     /**
@@ -299,7 +299,7 @@ class System
      */
     public function isUpadate($filename)
     {
-       
+
         if (file_exists($filename)) {
             $mtime = \filemtime($filename);
             $atime = \fileatime($filename);
@@ -318,10 +318,10 @@ class System
         } else {
             return -1;
         }
-        
+
     }
 
     /**
-     * 
+     *
      */
 }
