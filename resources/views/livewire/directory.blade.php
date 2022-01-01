@@ -73,4 +73,13 @@
 
     {{-- 퍼미션 알람--}}
     @include("jinytable::error.popup.permit")
+
+    <script>
+        window.addEventListener('dropzone', event => {
+            //alert('Name updated to: ');
+            setDropzone();
+        })
+    </script>
+
 </div>
+

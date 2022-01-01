@@ -10,7 +10,6 @@
         <!-- end page title -->
 
 
-
         <x-card>
             <x-card-body>
                 {{-- Live 디렉터리를 출력합니다. --}}
@@ -24,6 +23,7 @@
         <!-- dropzone -->
 
         @include("jinyfile::script.drop")
+
 
 
         {{-- Admin Rule Setting --}}

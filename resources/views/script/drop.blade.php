@@ -102,7 +102,7 @@
 
 @push('scripts')
     <script>
-        var dropzone = document.querySelectorAll(".dropzone");
+
         // var dropzone = document.getElementById('dropzone');
         var progressArea = document.querySelector(".progress-area");
         var uploadedArea = document.querySelector(".uploaded-area");
@@ -169,37 +169,41 @@
 
         }
 
+        function setDropzone()
+        {
+            var dropzone = document.querySelectorAll(".dropzone");
+            //console.log("set dropzone");
+            dropzone.forEach(el => {
+                el.addEventListener('drop', function(e){
+                    e.preventDefault();
+                    e.target.classList.remove("dragover");
 
-        dropzone.forEach(el => {
-            el.addEventListener('drop', function(e){
-                e.preventDefault();
-                e.target.classList.remove("dragover");
+                    // console.log(e.target.dataset.path);
+                    path = e.target.dataset.path;
 
-                // console.log(e.target.dataset.path);
-                path = e.target.dataset.path;
+                    uploadedArea.innerHTML = "";
 
-                uploadedArea.innerHTML = "";
+                    var files = e.dataTransfer.files;
+                    for(let i=0; i < e.dataTransfer.files.length; i++) {
+                        uploadFile(e.dataTransfer.files[i]);
+                    }
+                });
 
-                var files = e.dataTransfer.files;
-                for(let i=0; i < e.dataTransfer.files.length; i++) {
-                    uploadFile(e.dataTransfer.files[i]);
-                }
+                el.addEventListener('dragover', function(e){
+                    e.preventDefault();
+                    e.target.classList.add("dragover");
+
+
+                });
+
+                el.addEventListener('dragleave', function(e){
+                    e.preventDefault();
+                    e.target.classList.remove("dragover");
+                });
             });
+        }
 
-            el.addEventListener('dragover', function(e){
-                e.preventDefault();
-                e.target.classList.add("dragover");
-
-
-            });
-
-            el.addEventListener('dragleave', function(e){
-                e.preventDefault();
-                e.target.classList.remove("dragover");
-            });
-        });
-
-
+        setDropzone();
 
     </script>
 @endpush

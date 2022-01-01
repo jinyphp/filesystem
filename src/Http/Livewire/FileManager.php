@@ -60,12 +60,15 @@ class FileManager extends Component
         $this->form = "";
 
 
+
     }
 
     public function popupFormClose()
     {
         $this->popupForm = false;
         $this->mode = "";
+
+
     }
 
     public function store()
@@ -73,7 +76,9 @@ class FileManager extends Component
         $filename = base_path().$this->filepath.DIRECTORY_SEPARATOR.$this->form;
         if(!file_exists($filename)) {
             mkdir($filename,755,true);
+            $this->dispatchBrowserEvent('dropzone', []);
         }
+
         $this->popupFormClose();
     }
 
