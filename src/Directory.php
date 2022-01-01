@@ -40,6 +40,8 @@ class Directory
         $__li->addItem("+ 여기에 파일을 올려 놓으세요.");
         $ul->addItem($__li);
 
+
+
         return $ul;
     }
 
@@ -53,7 +55,11 @@ class Directory
         $li = xLi();
         foreach($tree as $item) {
             $_li = clone $li;
-            $_li->addItem($item['name']); // 이름등록
+            $edit = (new CTag('a',true))
+                ->addItem($item['name'])
+                ->setAttribute('href', "javascript: void(0);")
+                ->setAttribute("wire:click","edit('".str_replace("\\","/",$item['path'])."')");
+            $_li->addItem($edit); // 이름등록
 
             // 삭제버튼
             if(isset($item['sub'])) {
@@ -65,7 +71,6 @@ class Directory
                 $_li->addItem($create);
 
                 // 서브폴더가 비어 있는 경우, 삭제 버튼 활성화
-
                 if(empty($item['sub'])) {
                     $_li->addItem(
                         (new CTag('a',true))
@@ -99,8 +104,12 @@ class Directory
             //$ul->addItem($this->addDropzone($item));
         }
 
-
         return $ul;
+    }
+
+    private function fileList()
+    {
+
     }
 
 

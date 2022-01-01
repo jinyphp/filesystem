@@ -50,16 +50,22 @@ class FileManager extends Component
     public $popupForm = false;
     public $form;
     public $filepath;
+    public $mode;
     public function create($path)
     {
+        $this->mode = "create";
+
         $this->filepath = $path;
         $this->popupForm = true;
         $this->form = "";
+
+
     }
 
     public function popupFormClose()
     {
         $this->popupForm = false;
+        $this->mode = "";
     }
 
     public function store()
@@ -68,9 +74,38 @@ class FileManager extends Component
         if(!file_exists($filename)) {
             mkdir($filename,755,true);
         }
-        $this->popupForm = false;
+        $this->popupFormClose();
     }
 
+    /** ----- ----- ----- ----- -----
+     *  edit
+     */
+
+    public function edit($path)
+    {
+        $this->mode = "edit";
+
+        $this->filepath = $path;
+        $this->popupForm = true;
+
+        // 파일, 디렉터리명만 추출
+        $path = str_replace("\\","/", $path);
+        $this->form = substr($path,strrpos($path,'/')+1);
+    }
+
+    public function update()
+    {
+        $path = str_replace("\\","/", $this->filepath);
+        $path = substr($path,0,strrpos($path,'/'));
+
+        $filename = base_path().$path.DIRECTORY_SEPARATOR.$this->form;
+        //dd($filename);
+
+        if(!file_exists($filename)) {
+            rename(base_path().$this->filepath, $filename);
+        }
+        $this->popupFormClose();
+    }
 
     /** ----- ----- ----- ----- -----
      *  delete
@@ -84,6 +119,12 @@ class FileManager extends Component
         $this->popupDelete = false;
     }
 
+    public function editDelete()
+    {
+        $this->popupFormClose();
+        //dd($this->filepath);
+        $this->delete($this->filepath);
+    }
 
     public function delete($path)
     {
@@ -100,10 +141,26 @@ class FileManager extends Component
     {
         $filename = base_path().$this->filepath;
         if(file_exists($filename)) {
-            unlink($filename);
+            $this->unlinkAll($filename);
         }
 
         $this->popupDeleteClose();
+    }
+
+    public function unlinkAll($dir) {
+        if(is_dir($dir)) {
+            foreach( scandir($dir) as $file) {
+                if($file == "." || $file == "..") continue;
+                if(is_dir($dir.DIRECTORY_SEPARATOR.$file)) {
+                    $this->unlinkAll($dir.DIRECTORY_SEPARATOR.$file);
+                } else {
+                    unlink($dir.DIRECTORY_SEPARATOR.$file);
+                }
+            }
+            rmdir($dir);
+        } else if(file_exists($dir)) {
+            unlink($dir);
+        }
     }
 
 

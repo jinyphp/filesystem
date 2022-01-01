@@ -28,10 +28,21 @@
 
         <x-slot name="footer">
             <x-flex-between>
-                <div></div>
                 <div>
-                    <x-button secondary wire:click="popupFormClose">취소</x-button>
-                    <x-button primary wire:click="store">생성</x-button>
+                    @if($mode == "edit")
+                        <x-button danger wire:click="editDelete">삭제</x-button>
+                    @endif
+                </div>
+                <div>
+                    @if($mode == "create")
+                        <x-button secondary wire:click="popupFormClose">취소</x-button>
+                        <x-button primary wire:click="store">생성</x-button>
+                    @endif
+
+                    @if($mode == "edit")
+                        <x-button secondary wire:click="popupFormClose">취소</x-button>
+                        <x-button success wire:click="update">수정</x-button>
+                    @endif
                 </div>
             </x-flex-between>
         </x-slot>
@@ -43,7 +54,7 @@
     <x-dialog-modal wire:model="popupDelete" maxWidth="xl">
 
         <x-slot name="content">
-            <p class="p-8">정말로 삭제할까요?</p>
+            <p class="p-8"> {{$filepath}} 정말로 삭제할까요?</p>
 
             {{--
             @foreach ($selected as $item)
