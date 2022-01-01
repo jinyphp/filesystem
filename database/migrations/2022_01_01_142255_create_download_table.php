@@ -21,6 +21,9 @@ class CreateDownloadTable extends Migration
 
             $table->string('permit')->nullable();
             $table->string('role')->nullable();
+
+            // 다운로드 횟수
+            $table->unsignedBigInteger('cnt')->default(0);
         });
     }
 

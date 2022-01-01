@@ -1,4 +1,12 @@
 <div>
+    {!! (new \Jiny\Html\CTag('a',true))
+        ->addItem(
+            xSpan(
+                xIcon("folder-plus")->setType("bootstrap")->setClass("h-4 w-4 inline-block")
+            )
+            ->addClass("px-2")
+        )
+        ->setAttribute("wire:click","create('".str_replace("\\","/",$path)."')") !!}
     {{$path}}
     <div class="directory">
         {!! $directory !!}

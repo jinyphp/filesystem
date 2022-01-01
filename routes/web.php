@@ -13,7 +13,8 @@ Route::middleware(['web','auth:sanctum', 'verified'])
     Route::resource('dropzone', \Jiny\Filesystem\Http\Controllers\Admin\DropzoneController::class);
 
     // 파일관리자
-    Route::resource('/', \Jiny\Filesystem\Http\Controllers\Admin\FileController::class);
+    Route::resource('/{slug1?}/{slug2?}/{slug3?}/{slug4?}/{slug5?}/{slug6?}/{slug7?}/{slug8?}/{slug9?}',
+    \Jiny\Filesystem\Http\Controllers\Admin\FileController::class);
 });
 
 

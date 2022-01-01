@@ -18,6 +18,10 @@ class FileManager extends Component
     {
         // 권환체크
         $this->permitCheck();
+
+        if(isset($this->actions['slug'])) {
+            $this->path .= $this->actions['slug'];
+        }
     }
 
     public function render()

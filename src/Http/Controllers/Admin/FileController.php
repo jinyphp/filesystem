@@ -29,4 +29,10 @@ class FileController extends ResourceController
         $this->actions['view_form'] = "jinyfile::admin.file.form";
     }
 
+    public function index(Request $request, ...$slug)
+    {
+        $this->actions['slug'] = "/".implode("/",$slug);
+        return parent::index($request);
+    }
+
 }
