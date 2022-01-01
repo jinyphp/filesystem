@@ -11,6 +11,7 @@ if(!function_exists("xScanDir")) {
 
         $base = base_path($path);
 
+
         $files = [];
         foreach (scandir($base) as $item) {
             // 제외 폴더 및 파일 처리

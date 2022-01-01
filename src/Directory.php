@@ -24,7 +24,10 @@ class Directory
     {
         if($path) $this->path = $path;
 
-        if(file_exists($this->path) && is_dir($this->path)) {
+        $base = base_path().$this->path;
+        //dd($base);
+        if(file_exists($base) && is_dir($base)) {
+
             $this->dir = xScanDir($this->path);
         }
         return $this;
@@ -86,15 +89,19 @@ class Directory
 
         // 삭제버튼
         if(isset($item['sub'])) {
-            // 디렉터리
-            // 서브 디렉터리 추가버튼 설정
+            // 디렉터리 생성버튼
             $left->addItem($this->btnCreate($item));
+
+            // 수정버튼
             $left->addItem($this->btnEdit($item));
 
             // 서브폴더가 비어 있는 경우, 삭제 버튼 활성화
             if(empty($item['sub'])) {
                 $left->addItem($this->btnDelete($item));
             }
+
+            // 외부 이동링크
+            $left->addItem( $this->btnExternal($item) );
 
         } else {
             // 파일 삭제 버튼
@@ -122,6 +129,19 @@ class Directory
     {
         $right = xDiv();
         return $right;
+    }
+
+    public function btnExternal($item)
+    {
+        $external = xSpan();
+            $external->addHtml('<svg xmlns="http://www.w3.org/2000/svg" class="inline-block w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+            </svg>')->addClass("px-2");
+
+        $link = (new CTag('a',true))
+                    ->addItem($external)
+                    ->setAttribute('href', Route("admin.file.").str_replace($this->path,"",$item['path']));
+        return $link;
     }
 
     public function btnPermit($item)

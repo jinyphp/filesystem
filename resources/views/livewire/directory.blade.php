@@ -12,14 +12,35 @@
         {!! $directory !!}
     </div>
 
-    {{-- 선택삭제 --}}
+    {{-- 수정 --}}
     @if ($popupForm)
     <x-dialog-modal wire:model="popupForm" maxWidth="xl">
 
         <x-slot name="content">
-            {!! xInputText()
-                ->setWire('model.defer',"form")
-            !!}
+            <x-navtab class="mb-3 nav-bordered">
+
+                <!-- formTab -->
+                <x-navtab-item class="show active" >
+
+                    <x-navtab-link class="rounded-0 active">
+                        <span class="d-none d-md-block">경로</span>
+                    </x-navtab-link>
+
+                    <x-form-hor>
+                        <x-form-label>이름</x-form-label>
+                        <x-form-item>
+                            {!! xInputText()
+                                ->setWire('model.defer',"form")
+                            !!}
+                        </x-form-item>
+                    </x-form-hor>
+
+
+
+                </x-navtab-item>
+            </x-navtab>
+
+
         </x-slot>
 
         <x-slot name="footer">
@@ -51,13 +72,6 @@
 
         <x-slot name="content">
             <p class="p-8"> {{$filepath}} 정말로 삭제할까요?</p>
-
-            {{--
-            @foreach ($selected as $item)
-                {{$item}}
-            @endforeach
-            --}}
-
         </x-slot>
 
         <x-slot name="footer">

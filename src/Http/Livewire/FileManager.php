@@ -71,6 +71,7 @@ class FileManager extends Component
 
     public function store()
     {
+
         $filename = base_path().$this->filepath.DIRECTORY_SEPARATOR.$this->form;
         if(!file_exists($filename)) {
             mkdir($filename,755,true);
@@ -78,6 +79,7 @@ class FileManager extends Component
         }
 
         $this->popupFormClose();
+        $this->mode = "";
     }
 
     /** ----- ----- ----- ----- -----
@@ -107,6 +109,7 @@ class FileManager extends Component
             rename(base_path().$this->filepath, $filename);
         }
         $this->popupFormClose();
+        $this->mode = "";
     }
 
     /** ----- ----- ----- ----- -----
