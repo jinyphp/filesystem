@@ -17,9 +17,10 @@ class UploadController extends Controller
         $uploaded = [];
 
         if($_POST['path']) {
-            $path = public_path($_POST['path']);
-            $path = $_POST['path'];
+            $path = base_path($_POST['path']);
+            //$path = $_POST['path'];
         } else {
+            // 경로가 없는 경우, 기본 public/uploads
             $path = public_path("uploads");
         }
         //return response()->json($path);

@@ -1,19 +1,25 @@
 <?php
 use \Jiny\Html\CTag;
 
+
+/**
+ * 재귀적 디렉터리 구조를 스켄하는 함수
+ */
 if(!function_exists("xScanDir")) {
     function xScanDir($path, $except=[]) {
         $except=['.','..','.git'];
 
-        //$base = public_path();
+        $base = base_path($path);
 
         $files = [];
-        foreach (scandir($path) as $item) {
+        foreach (scandir($base) as $item) {
+            // 제외 폴더 및 파일 처리
             foreach($except as $name) {
                 if($item == $name) continue(2);
             }
 
-            if(is_dir($path.DIRECTORY_SEPARATOR.$item)) {
+            // 디렉터리 검사
+            if(is_dir($base.DIRECTORY_SEPARATOR.$item)) {
                 $files []= [
                     'name'=>$item,
                     'path'=>$path.DIRECTORY_SEPARATOR.$item,
@@ -27,11 +33,12 @@ if(!function_exists("xScanDir")) {
             }
         }
 
-        //dd($files);
         return $files;
     }
 }
 
+/*
+// 클래스로 이동
 if(!function_exists("xDirTree")) {
     function xDirTree($tree)
     {
@@ -69,9 +76,7 @@ if(!function_exists("xDirTree")) {
             $ul->addItem($_li);
         }
         // 추가 dropzone
-        /*
 
-        */
 
 
 
@@ -79,3 +84,4 @@ if(!function_exists("xDirTree")) {
         return $ul;
     }
 }
+*/

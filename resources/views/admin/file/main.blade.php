@@ -11,24 +11,12 @@
 
 
 
-
-        <style>
-            .directory li {
-                padding: 10px 0px 0px 10px;
-                border-left-color: gray;
-                border-left-width: 1px;
-                margin-top: -1px;
-                border-top-color: #cccccc;
-                border-top-width: 1px;
-                border-top-style: dashed;
-            }
-        </style>
-
         <x-card>
             <x-card-body>
-                @livewire('FileDirectory', [
+                {{-- Live 디렉터리를 출력합니다. --}}
+                @livewire('FileManager', [
                     'actions' => $actions,
-                    'path' =>  public_path('images/themes')
+                    'path' => '/public/images/themes'
                 ])
             </x-card-body>
         </x-card>

@@ -5,8 +5,9 @@
 namespace Jiny\Filesystem\Http\Livewire;
 
 use Livewire\Component;
+use Jiny\Filesystem\Directory;
 
-class FileDirectory extends Component
+class FileManager extends Component
 {
     use \Jiny\Table\Http\Livewire\Permit;
     public $actions;
@@ -14,20 +15,19 @@ class FileDirectory extends Component
 
     public function mount()
     {
+        // 권환체크
         $this->permitCheck();
-
     }
 
     public function render()
     {
+        // 읽기 권한 체크
         if($this->permit['read']) {
-            //dd($this->path);
-            $directory = xDirTree( xScanDir( $this->path ) );
+
+            $directory = (new Directory($this->path))->scan()->html();
             $directory->setAttribute("data-path", $this->path);
 
 
-
-            $directory = $this->setDeleteLink($directory);
 
             return view("jinyfile::livewire.directory", ['directory'=>$directory]);
         }
@@ -44,10 +44,33 @@ class FileDirectory extends Component
         ## 페이지를 재갱신 합니다.
     }
 
-    private function setDeleteLink($obj) {
-
-        return $obj;
+    /** ----- ----- ----- ----- -----
+     *  create : 디렉터리 생성
+     */
+    public $popupForm = false;
+    public $form;
+    public $filepath;
+    public function create($path)
+    {
+        $this->filepath = $path;
+        $this->popupForm = true;
+        $this->form = "";
     }
+
+    public function popupFormClose()
+    {
+        $this->popupForm = false;
+    }
+
+    public function store()
+    {
+        $filename = base_path().$this->filepath.DIRECTORY_SEPARATOR.$this->form;
+        if(!file_exists($filename)) {
+            mkdir($filename,755,true);
+        }
+        $this->popupForm = false;
+    }
+
 
     /** ----- ----- ----- ----- -----
      *  delete
@@ -61,13 +84,13 @@ class FileDirectory extends Component
         $this->popupDelete = false;
     }
 
-    public $delete_filepath;
+
     public function delete($path)
     {
         //dd($this->permit);
         if($this->permit['delete']) {
             $this->popupDelete = true;
-            $this->delete_filepath = $path;
+            $this->filepath = $path;
         } else {
             $this->popupPermitOpen();
         }
@@ -75,8 +98,11 @@ class FileDirectory extends Component
 
     public function condfirmDelete()
     {
-        unlink($this->delete_filepath);
-        // dd($this->delete_filepath);
+        $filename = base_path().$this->filepath;
+        if(file_exists($filename)) {
+            unlink($filename);
+        }
+
         $this->popupDeleteClose();
     }
 
