@@ -105,7 +105,8 @@ class Directory
                     xSpan(date("Y-M-D H:i:s",filemtime(base_path().$item['path'])))
                     ->addClass("text-gray-500 text-xs pr-2")
                 )
-                ->addItem($this->btnDownload($item));
+                ->addItem($this->btnDownload($item))
+                ->addItem($this->btnPermit($item));
 
 
             $left->addItem($line1);
@@ -119,6 +120,16 @@ class Directory
     {
         $right = xDiv();
         return $right;
+    }
+
+    public function btnPermit($item)
+    {
+        $link = (new CTag('a',true))
+                    ->addItem('Permit')
+                    //->setAttribute('href', "javascript: void(0);")
+                    ->setAttribute("wire:click","setPermit('".str_replace("\\","/",$item['path'])."')");
+        $link->addClass("text-violet-500 text-xs pr-2");
+        return $link;
     }
 
 

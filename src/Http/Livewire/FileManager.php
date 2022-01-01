@@ -6,6 +6,7 @@ namespace Jiny\Filesystem\Http\Livewire;
 
 use Livewire\Component;
 use Jiny\Filesystem\Directory;
+use Illuminate\Support\Facades\DB;
 
 class FileManager extends Component
 {
@@ -158,11 +159,52 @@ class FileManager extends Component
         }
     }
 
+    /** ----- ----- ----- ----- -----
+     *  download
+     */
     public function export($path)
     {
         $filename = base_path().$path;
         return response()
             ->download($filename);
+    }
+
+    /** ----- ----- ----- ----- -----
+     *  Permit
+     */
+    public $popupPermitSet = false;
+    public $permitForm = [];
+    public function setPermit($path)
+    {
+        $this->filepath = $path;
+        $this->permitForm = [];
+        $this->permitForm['path'] = $path;
+
+        $row = DB::table('download')->where('path',$path)->first();
+        if ($row) {
+            $this->permitForm['permit'] = $row->permit;
+        }
+
+        $this->popupPermitSet = true;
+    }
+
+    public function setPermited()
+    {
+        DB::table('download')
+            ->where('path',$this->filepath)
+            ->updateOrInsert($this->permitForm);
+
+        $this->popupPermitSet = false;
+    }
+
+    public function popupPermitSetOpen()
+    {
+        $this->popupPermitSet = true;
+    }
+
+    public function popupPermitSetClose()
+    {
+        $this->popupPermitSet = false;
     }
 
 }

@@ -1,6 +1,4 @@
 <div>
-
-
     {{$path}}
     <div class="directory">
         {!! $directory !!}
@@ -63,6 +61,50 @@
 
     {{-- 퍼미션 알람--}}
     @include("jinytable::error.popup.permit")
+
+    {{-- 선택삭제 --}}
+    @if ($popupPermitSet)
+    <x-dialog-modal wire:model="popupPermitSet" maxWidth="xl">
+
+        <x-slot name="content">
+            <x-navtab class="mb-3 nav-bordered">
+
+                <!-- formTab -->
+                <x-navtab-item class="show active" >
+
+                    <x-navtab-link class="rounded-0 active">
+                        <span class="d-none d-md-block">권환설정</span>
+                    </x-navtab-link>
+
+                    <x-form-hor>
+                        <x-form-label>파일명</x-form-label>
+                        <x-form-item>
+                            {{ $this->permitForm['path'] }}
+                        </x-form-item>
+                    </x-form-hor>
+
+                    <x-form-hor>
+                        <x-form-label>다운로드 허용</x-form-label>
+                        <x-form-item>
+                            {!! xCheckbox()
+                                ->setWire('model.defer',"permitForm.permit")
+                            !!}
+                        </x-form-item>
+                    </x-form-hor>
+
+
+
+                </x-navtab-item>
+            </x-navtab>
+
+        </x-slot>
+
+        <x-slot name="footer">
+            <x-button secondary wire:click="popupPermitSetClose">취소</x-button>
+            <x-button primary wire:click="setPermited">설정</x-button>
+        </x-slot>
+    </x-dialog-modal>
+    @endif
 
     <script>
         window.addEventListener('dropzone', event => {
