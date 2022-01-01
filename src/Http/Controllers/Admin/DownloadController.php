@@ -16,11 +16,16 @@ class DownloadController extends Controller
 
     public function index(...$slug)
     {
+        //dd($slug);
         $path = implode("/",$slug);
+        //dd($path);
         $row = DB::table('download')->where('path',"/".$path)->first();
         //dd($row);
         if ($row) {
             if($row->permit) {
+                // 다운로드 카운트
+                DB::table('download')->increment('cnt');
+
                 $filename = base_path()."/".$path;
                 return response()->download($filename);
             }

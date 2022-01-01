@@ -31,7 +31,7 @@ class FileController extends ResourceController
 
     public function index(Request $request, ...$slug)
     {
-        $this->actions['slug'] = "/".implode("/",$slug);
+        $this->actions['slug'] = implode("/",$slug);
         return parent::index($request);
     }
 

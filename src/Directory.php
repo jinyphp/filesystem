@@ -6,7 +6,7 @@ use \Jiny\Html\CTag;
 // 디렉터리를 Html Ul 테그로 생성합니다.
 class Directory
 {
-    public $dir;
+    public $dir=[];
     public $path;
 
     public function __construct($path)
@@ -24,7 +24,9 @@ class Directory
     {
         if($path) $this->path = $path;
 
-        $this->dir = xScanDir($this->path);
+        if(file_exists($this->path) && is_dir($this->path)) {
+            $this->dir = xScanDir($this->path);
+        }
         return $this;
     }
 
