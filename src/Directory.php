@@ -40,54 +40,16 @@ class Directory
         $__li->addItem("+ 여기에 파일을 올려 놓으세요.");
         $ul->addItem($__li);
 
-
-
         return $ul;
     }
 
     public function makeTree($tree)
     {
-        //dd($tree);
-
-        $icon_folder_add = xIcon("folder-plus")->setType("bootstrap")->setClass("h-4 w-4 inline-block");
-
         $ul = xUl();
         $li = xLi();
         foreach($tree as $item) {
             $_li = clone $li;
-            $edit = (new CTag('a',true))
-                ->addItem($item['name'])
-                ->setAttribute('href', "javascript: void(0);")
-                ->setAttribute("wire:click","edit('".str_replace("\\","/",$item['path'])."')");
-            $_li->addItem($edit); // 이름등록
-
-            // 삭제버튼
-            if(isset($item['sub'])) {
-                // 디렉터리
-                // 서브 디렉터리 추가버튼 설정
-                $create = (new CTag('a',true))
-                    ->addItem($icon_folder_add)
-                    ->setAttribute("wire:click","create('".str_replace("\\","/",$item['path'])."')");
-                $_li->addItem($create);
-
-                // 서브폴더가 비어 있는 경우, 삭제 버튼 활성화
-                if(empty($item['sub'])) {
-                    $_li->addItem(
-                        (new CTag('a',true))
-                        ->addItem(xIcon("x")->setType("bootstrap")->setClass("h-6 w-6"))
-                        ->setAttribute("wire:click","delete('".str_replace("\\","/",$item['path'])."')")
-                    );
-                }
-
-
-            } else {
-                // 파일 삭제 버튼
-                $_li->addItem(
-                    (new CTag('a',true))
-                    ->addItem(xIcon("x")->setType("bootstrap")->setClass("h-6 w-6"))
-                    ->setAttribute("wire:click","delete('".str_replace("\\","/",$item['path'])."')")
-                );
-            }
+            $_li->addItem($this->item($item));
 
             // 서브디렉터리 재귀호출
             if(isset($item['sub'])) {
@@ -99,29 +61,111 @@ class Directory
             $ul->addItem($_li);
         }
 
-        // dropzone
-        if(isset($item)) {
-            //$ul->addItem($this->addDropzone($item));
-        }
-
         return $ul;
     }
 
-    private function fileList()
+    // 출력형태 지정
+    public function item($item)
     {
+        $info = pathinfo( base_path().$item['path'] );
+        $left = $this->itemLeft($item, $info);
+        $right = $this->itemRight($item, $info);
 
+        $flex = xDiv();
+        $flex->addItem($left);
+        $flex->addItem($right);
+
+        return $flex->addClass("flex justify-between");
+    }
+
+    public function itemLeft($item, $info)
+    {
+        $left = xDiv();
+
+        // 삭제버튼
+        if(isset($item['sub'])) {
+            // 디렉터리
+            // 서브 디렉터리 추가버튼 설정
+            $left->addItem($this->btnCreate($item));
+            $left->addItem($this->btnEdit($item));
+
+            // 서브폴더가 비어 있는 경우, 삭제 버튼 활성화
+            if(empty($item['sub'])) {
+                $left->addItem($this->btnDelete($item));
+            }
+
+        } else {
+            // 파일 삭제 버튼
+            $line1 = xDiv()
+                ->addItem($this->btnEdit($item))
+                ->addItem($this->btnDelete($item));
+
+            $line2 = xDiv()
+                ->addItem(
+                    xSpan(date("Y-M-D H:i:s",filemtime(base_path().$item['path'])))
+                    ->addClass("text-gray-500 text-xs pr-2")
+                )
+                ->addItem($this->btnDownload($item));
+
+
+            $left->addItem($line1);
+            $left->addItem($line2);
+        }
+
+        return $left;
+    }
+
+    public function itemRight($item, $info)
+    {
+        $right = xDiv();
+        return $right;
+    }
+
+
+    public function btnDownload($item)
+    {
+        $link = (new CTag('a',true))
+                    ->addItem('download')
+                    //->setAttribute('href', "javascript: void(0);")
+                    ->setAttribute("wire:click","export('".str_replace("\\","/",$item['path'])."')");
+        $link->addClass("text-green-500 text-xs pr-2");
+        return $link;
+    }
+
+    public function btnEdit($item)
+    {
+        return (new CTag('a',true))
+        ->addItem($item['name'])
+        ->setAttribute('href', "javascript: void(0);")
+        ->setAttribute("wire:click","edit('".str_replace("\\","/",$item['path'])."')");
+    }
+
+    public function btnCreate($item)
+    {
+        $icon_folder_add = xIcon("folder-plus")->setType("bootstrap")->setClass("h-4 w-4 inline-block");
+
+        return (new CTag('a',true))
+            ->addItem(xSpan($icon_folder_add)->addClass("px-2"))
+            ->setAttribute("wire:click","create('".str_replace("\\","/",$item['path'])."')");
+    }
+
+    public function btnDelete($item)
+    {
+        return (new CTag('a',true))
+            ->addItem(xIcon("x")->setType("bootstrap")->setClass("h-3 w-3 inline-block text-red-600"))
+            ->setAttribute("wire:click","delete('".str_replace("\\","/",$item['path'])."')");
     }
 
 
     private function addDropzone($item)
     {
-        $__li = xLi();
+        $li = xLi();
         $path = $this->resolvePath($item['path']);
-        $__li->addClass("dropzone");
-        $__li->setAttribute("data-path", $path."/".$item['name']);
-        $__li->addItem("+ 여기에 파일을 올려 놓으세요.");
+        $li->addClass("dropzone");
+        $li->setAttribute("data-path", $path."/".$item['name']);
+        $li->addItem("+ 여기에 파일을 올려 놓으세요.");
 
-        return $__li;
+        return $li;
     }
 
     private function resolvePath($path)

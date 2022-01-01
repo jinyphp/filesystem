@@ -1,12 +1,18 @@
 <?php
+
+
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 
-// 관리자 파일 관리
+/**
+ * 관리자 Url
+ */
 Route::middleware(['web','auth:sanctum', 'verified'])
 ->name('admin.file.')
 ->prefix('/admin/file')->group(function () {
     Route::resource('dropzone', \Jiny\Filesystem\Http\Controllers\Admin\DropzoneController::class);
+
+    // 파일관리자
     Route::resource('/', \Jiny\Filesystem\Http\Controllers\Admin\FileController::class);
 });
 
@@ -22,3 +28,10 @@ Route::middleware(['web'])
 });
 
 
+/**
+ * URL 다운로드
+ */
+use Jiny\Filesystem\Http\Controllers\Admin\DownloadController;
+Route::get('/download/{slug1?}/{slug2?}/{slug3?}/{slug4?}/{slug5?}/{slug6?}/{slug7?}/{slug8?}/{slug9?}',
+    [DownloadController::class,"index"]
+);

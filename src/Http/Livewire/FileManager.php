@@ -27,8 +27,6 @@ class FileManager extends Component
             $directory = (new Directory($this->path))->scan()->html();
             $directory->setAttribute("data-path", $this->path);
 
-
-
             return view("jinyfile::livewire.directory", ['directory'=>$directory]);
         }
 
@@ -58,17 +56,12 @@ class FileManager extends Component
         $this->filepath = $path;
         $this->popupForm = true;
         $this->form = "";
-
-
-
     }
 
     public function popupFormClose()
     {
         $this->popupForm = false;
         $this->mode = "";
-
-
     }
 
     public function store()
@@ -104,7 +97,6 @@ class FileManager extends Component
         $path = substr($path,0,strrpos($path,'/'));
 
         $filename = base_path().$path.DIRECTORY_SEPARATOR.$this->form;
-        //dd($filename);
 
         if(!file_exists($filename)) {
             rename(base_path().$this->filepath, $filename);
@@ -127,13 +119,11 @@ class FileManager extends Component
     public function editDelete()
     {
         $this->popupFormClose();
-        //dd($this->filepath);
         $this->delete($this->filepath);
     }
 
     public function delete($path)
     {
-        //dd($this->permit);
         if($this->permit['delete']) {
             $this->popupDelete = true;
             $this->filepath = $path;
@@ -168,6 +158,11 @@ class FileManager extends Component
         }
     }
 
-
+    public function export($path)
+    {
+        $filename = base_path().$path;
+        return response()
+            ->download($filename);
+    }
 
 }

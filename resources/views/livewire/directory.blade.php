@@ -1,15 +1,5 @@
 <div>
-    <style>
-        .directory li {
-            padding: 10px 0px 0px 10px;
-            border-left-color: gray;
-            border-left-width: 1px;
-            margin-top: -1px;
-            border-top-color: #cccccc;
-            border-top-width: 1px;
-            border-top-style: dashed;
-        }
-    </style>
+
 
     {{$path}}
     <div class="directory">
