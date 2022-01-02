@@ -117,6 +117,8 @@ class Directory
                 ->addItem($this->btnDownload($item))
                 ->addItem($this->btnPermit($item));
 
+            $line2->addItem( $this->btnLinkCopy($item) );
+
 
             $left->addItem($line1);
             $left->addItem($line2);
@@ -129,6 +131,23 @@ class Directory
     {
         $right = xDiv();
         return $right;
+    }
+
+
+
+    public function btnLinkCopy($item)
+    {
+        $external = xSpan();
+            $external->addHtml('<svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
+            </svg>')->addClass("px-2");
+
+        $link = (new CTag('a',true))
+                ->addItem($external)
+                ->setAttribute('title',"다운로드 주소 복사")
+                ->setAttribute('onclick', "copy('".Route("download").str_replace("\\","/",$item['path'])."')");
+        //dd($link);
+        return $link;
     }
 
     public function btnExternal($item)

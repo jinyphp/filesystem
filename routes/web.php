@@ -36,4 +36,4 @@ Route::middleware(['web'])
 use Jiny\Filesystem\Http\Controllers\Admin\DownloadController;
 Route::get('/download/{a?}/{b?}/{c?}/{d?}/{e?}/{f?}/{g?}/{h?}',
     [DownloadController::class,"index"]
-);
+)->name('download');

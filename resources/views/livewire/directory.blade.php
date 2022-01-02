@@ -135,5 +135,20 @@
         })
     </script>
 
+    <script>
+        function copy(path) {
+            const t = document.createElement("textarea");
+            document.body.appendChild(t);
+            t.value = path;
+            t.select();
+            document.execCommand('copy');
+            document.body.removeChild(t);
+
+            console.log(path);
+        }
+
+
+    </script>
+
 </div>
 
