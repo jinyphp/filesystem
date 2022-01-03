@@ -13,8 +13,21 @@ Route::middleware(['web','auth:sanctum', 'verified'])
     Route::resource('dropzone', \Jiny\Filesystem\Http\Controllers\Admin\DropzoneController::class);
 
     // 파일관리자
-    Route::get('/{a?}/{b?}/{c?}/{d?}/{e?}/{f?}/{g?}/{h?}',
-        [\Jiny\Filesystem\Http\Controllers\Admin\FileController::class,"index"]);
+    Route::get('explore/{a?}/{b?}/{c?}/{d?}/{e?}/{f?}/{g?}/{h?}',
+        [\Jiny\Filesystem\Http\Controllers\Admin\FileController::class,"index"])
+        ->name('explore');
+
+    // Json 편집
+    /*
+    Route::get('json/actions/{a?}/{b?}/{c?}/{d?}/{e?}/{f?}/{g?}/{h?}',
+        [\Jiny\Filesystem\Http\Controllers\Admin\JsonController::class,"index"]);
+    */
+
+
+    // Json 편집
+    Route::get('json/{a?}/{b?}/{c?}/{d?}/{e?}/{f?}/{g?}/{h?}',
+        [\Jiny\Filesystem\Http\Controllers\Admin\JsonController::class,"index"]);
+
 });
 
 
@@ -33,7 +46,7 @@ Route::middleware(['web'])
  * URL 다운로드
  * download/public/images/themes/1200x900-bs5-540x405.jpg
  */
-use Jiny\Filesystem\Http\Controllers\Admin\DownloadController;
+use Jiny\Filesystem\Http\Controllers\Download;
 Route::get('/download/{a?}/{b?}/{c?}/{d?}/{e?}/{f?}/{g?}/{h?}',
-    [DownloadController::class,"index"]
+    [Download::class,"index"]
 )->name('download');

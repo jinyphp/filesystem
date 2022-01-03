@@ -28,7 +28,14 @@ class JinyFilesystemServiceProvider extends ServiceProvider
     {
         /* 라이브와이어 컴포넌트 등록 */
         $this->app->afterResolving(BladeCompiler::class, function () {
-            Livewire::component('FileManager', \Jiny\Filesystem\Http\Livewire\FileManager::class);
+            Livewire::component('FileExplore', \Jiny\Filesystem\Http\Livewire\FileExplore::class);
+
+            Livewire::component('popupJson', \Jiny\Filesystem\Http\Livewire\popupJson::class);
+
+
+            Livewire::component('JsonEdit', \Jiny\Filesystem\Http\Livewire\JsonEdit::class);
+
+            Livewire::component('SetActionPath', \Jiny\Filesystem\Http\Livewire\SetActionPath::class);
         });
 
     }

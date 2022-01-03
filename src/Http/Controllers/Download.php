@@ -1,13 +1,13 @@
 <?php
 
-namespace Jiny\Filesystem\Http\Controllers\Admin;
+namespace Jiny\Filesystem\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB;
 
-class DownloadController extends Controller
+class Download extends Controller
 {
     public function __construct()
     {

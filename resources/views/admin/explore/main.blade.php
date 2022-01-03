@@ -27,10 +27,17 @@
 
         <x-card>
             <x-card-body>
+                @php
+                    if(isset($actions['path'])) {
+                        $path = $actions['path'];
+                    } else {
+                        $path = "/resources";
+                    }
+                @endphp
                 {{-- Live 디렉터리를 출력합니다. --}}
-                @livewire('FileManager', [
+                @livewire('FileExplore', [
                     'actions' => $actions,
-                    'path' => '/public/images/themes'
+                    'path' => $path
                 ])
             </x-card-body>
         </x-card>
@@ -39,10 +46,13 @@
 
         @include("jinyfile::script.drop")
 
-
-
         {{-- Admin Rule Setting --}}
-        @include('jinytable::setActionRule')
+        @include('jinyfile::setActionRule')
+
+        {{-- 파일정보 수정 --}}
+        @livewire('popupJson', ['actions' => $actions])
+
+
 
     </x-theme-layout>
 </x-theme>

@@ -89,6 +89,9 @@ class Directory
 
         // 삭제버튼
         if(isset($item['sub'])) {
+            // 이동버튼
+            //$left->addItem($this->btnMove($item));
+
             // 디렉터리 생성버튼
             $left->addItem($this->btnCreate($item));
 
@@ -106,8 +109,15 @@ class Directory
         } else {
             // 파일 삭제 버튼
             $line1 = xDiv()
-                ->addItem($this->btnEdit($item))
-                ->addItem($this->btnDelete($item));
+                ->addItem($this->btnEdit($item));
+
+            // 수정버튼
+            if($info['extension'] == "json") {
+                $line1->addItem($this->btnModify($item));
+            }
+
+            $line1->addItem($this->btnDelete($item));
+
 
             $line2 = xDiv()
                 ->addItem(
@@ -133,8 +143,34 @@ class Directory
         return $right;
     }
 
+    public function btnModify($item)
+    {
+        $icon = xSpan();
+        $icon->addHtml('<svg xmlns="http://www.w3.org/2000/svg" class="inline-block w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+        </svg>');
+        $icon->addClass("px-2");
+
+        $link = (new CTag('a',true))
+                    ->addItem($icon)
+                    ->setAttribute("wire:click","$"."emit('editJson', '".str_replace("\\","/",$item['path'])."')");
+        //$link->addClass("text-xs pr-2");
+        return $link;
+    }
 
 
+
+
+
+    public function btnMove($item)
+    {
+        $icon = xSpan();
+        $icon->addHtml('<svg xmlns="http://www.w3.org/2000/svg" class="inline-block w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z" />
+        </svg>');
+
+        return $icon;
+    }
     public function btnLinkCopy($item)
     {
         $external = xSpan();
@@ -159,7 +195,7 @@ class Directory
 
         $link = (new CTag('a',true))
                     ->addItem($external)
-                    ->setAttribute('href', Route("admin.file.").str_replace($this->path,"",$item['path']));
+                    ->setAttribute('href', Route("admin.file.explore").str_replace($this->path,"",$item['path']));
         return $link;
     }
 

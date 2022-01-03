@@ -1,14 +1,15 @@
 <?php
-/**
- * 파일목록 출력하기
- */
+
 namespace Jiny\Filesystem\Http\Livewire;
 
 use Livewire\Component;
 use Jiny\Filesystem\Directory;
 use Illuminate\Support\Facades\DB;
 
-class FileManager extends Component
+/**
+ * 파일목록 탐색합니다.
+ */
+class FileExplore extends Component
 {
     use \Jiny\Table\Http\Livewire\Permit;
     public $actions;
@@ -214,4 +215,14 @@ class FileManager extends Component
         $this->popupPermitSet = false;
     }
 
+    /** ----- ----- ----- ----- -----
+     *  modify
+     */
+    public function setModify($path)
+    {
+
+    }
+
 }
+
+

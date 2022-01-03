@@ -207,8 +207,6 @@
             });
         }
 
-
-
         setDropzone();
 
     </script>

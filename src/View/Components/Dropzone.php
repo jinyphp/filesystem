@@ -4,6 +4,9 @@ namespace Jiny\Filesystem\View\Components;
 
 use Illuminate\View\Component;
 
+/**
+ * dropzone 영역을 설정하는 컴포넌트
+ */
 class Dropzone extends Component
 {
     public $path;

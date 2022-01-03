@@ -19,18 +19,14 @@ class FileController extends ResourceController
         parent::__construct();
         $this->setVisit($this);
 
-        ##
-        $this->actions['table'] = "site_theme_store"; // 테이블 정보
-        $this->actions['paging'] = 10; // 페이지 기본값
 
-        $this->actions['view_main'] = "jinyfile::admin.file.main";
-        $this->actions['view_main_layout'] = "jinyfile::admin.file.main_layout";
-        $this->actions['view_list'] = "jinyfile::admin.file.tile";
-        $this->actions['view_form'] = "jinyfile::admin.file.form";
+        $this->actions['view_main'] = "jinyfile::admin.explore.main";
+
     }
 
     public function index(Request $request, ...$slug)
     {
+        // 서브경로를 추가합니다.
         $this->actions['slug'] = implode("/",$slug);
         return parent::index($request);
     }
