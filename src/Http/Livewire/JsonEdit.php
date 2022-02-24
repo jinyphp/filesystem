@@ -16,7 +16,7 @@ use \Jiny\Html\CTag;
 class JsonEdit extends Component
 {
     public $actions;
-    public $form = [];
+    public $forms = [];
     public $json;
     public $filename;
 
@@ -28,14 +28,14 @@ class JsonEdit extends Component
             $path = base_path().$this->filename;
             if(file_exists($path) && !is_dir($path)) {
                 $body = file_get_contents($path);
-                $this->form = json_decode($body,true);
+                $this->forms = json_decode($body,true);
             }
         }
     }
 
     public function render()
     {
-        $keyName = $this->jsonKeytoDotName($this->form);
+        $keyName = $this->jsonKeytoDotName($this->forms);
         $treeForm = $this->treeForms($keyName);
         return view("jinyfile::livewire.jsonEdit",['treeForm'=>$treeForm]);
     }
@@ -89,7 +89,7 @@ class JsonEdit extends Component
         $input = xInput();
         $input->setId("inputPassword");
         $input->setAttribute('type',"text");
-        $input->setAttribute('wire:model.defer',"form.".$value);
+        $input->setAttribute('wire:model.defer',"forms.".$value);
 
         return xRow()
             ->addItem($label)
@@ -104,7 +104,7 @@ class JsonEdit extends Component
     public function jsonUpdate()
     {
         $path = base_path().$this->filename;
-        $json = json_encode($this->form,JSON_PRETTY_PRINT|JSON_UNESCAPED_UNICODE);
+        $json = json_encode($this->forms,JSON_PRETTY_PRINT|JSON_UNESCAPED_UNICODE);
         file_put_contents($path, $json);
     }
 

@@ -17,7 +17,7 @@ use \Jiny\Html\CTag;
 class popupJson extends Component
 {
     public $actions;
-    public $form = [];
+    public $forms = [];
     public $json;
 
     public $popupJson=false;
@@ -25,7 +25,7 @@ class popupJson extends Component
     {
         $this->popupJson = false;
         $this->json = [];
-        $this->form = [];
+        $this->forms = [];
     }
 
     public function popupJsonOpen()
@@ -35,7 +35,7 @@ class popupJson extends Component
 
     public function render()
     {
-        $keyName = $this->jsonKeytoDotName($this->form);
+        $keyName = $this->jsonKeytoDotName($this->forms);
         $treeForm = $this->treeForms($keyName);
 
         return view("jinyfile::livewire.popup.json",[
@@ -59,7 +59,7 @@ class popupJson extends Component
         $path = base_path().$this->filename;
         if(file_exists($path)) {
             $body = file_get_contents($path);
-            $this->form = json_decode($body,true);
+            $this->forms = json_decode($body,true);
         }
     }
 
@@ -113,7 +113,7 @@ class popupJson extends Component
         $input = xInput();
         $input->setId("inputPassword");
         $input->setAttribute('type',"text");
-        $input->setAttribute('wire:model.defer',"form.".$value);
+        $input->setAttribute('wire:model.defer',"forms.".$value);
 
         return xRow()
             ->addItem($label)
@@ -128,7 +128,7 @@ class popupJson extends Component
     public function jsonUpdate()
     {
         $path = base_path().$this->filename;
-        $json = json_encode($this->form,JSON_PRETTY_PRINT|JSON_UNESCAPED_UNICODE);
+        $json = json_encode($this->forms,JSON_PRETTY_PRINT|JSON_UNESCAPED_UNICODE);
         file_put_contents($path, $json);
 
         $this->popupJsonClose();

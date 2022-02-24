@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 Route::middleware(['web','auth:sanctum', 'verified'])
 ->name('admin.file.')
 ->prefix('/admin/file')->group(function () {
+
     Route::resource('dropzone', \Jiny\Filesystem\Http\Controllers\Admin\DropzoneController::class);
 
     // 파일관리자

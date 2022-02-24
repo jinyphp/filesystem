@@ -52,7 +52,7 @@ class FileExplore extends Component
      *  create : 디렉터리 생성
      */
     public $popupForm = false;
-    public $form;
+    public $forms;
     public $filepath;
     public $mode;
     public function create($path)
@@ -61,7 +61,7 @@ class FileExplore extends Component
 
         $this->filepath = $path;
         $this->popupForm = true;
-        $this->form = "";
+        $this->forms = "";
     }
 
     public function popupFormClose()
@@ -73,7 +73,7 @@ class FileExplore extends Component
     public function store()
     {
 
-        $filename = base_path().$this->filepath.DIRECTORY_SEPARATOR.$this->form;
+        $filename = base_path().$this->filepath.DIRECTORY_SEPARATOR.$this->forms;
         if(!file_exists($filename)) {
             mkdir($filename,755,true);
             $this->dispatchBrowserEvent('dropzone', []);
@@ -96,7 +96,7 @@ class FileExplore extends Component
 
         // 파일, 디렉터리명만 추출
         $path = str_replace("\\","/", $path);
-        $this->form = substr($path,strrpos($path,'/')+1);
+        $this->forms = substr($path,strrpos($path,'/')+1);
     }
 
     public function update()
@@ -104,7 +104,7 @@ class FileExplore extends Component
         $path = str_replace("\\","/", $this->filepath);
         $path = substr($path,0,strrpos($path,'/'));
 
-        $filename = base_path().$path.DIRECTORY_SEPARATOR.$this->form;
+        $filename = base_path().$path.DIRECTORY_SEPARATOR.$this->forms;
 
         if(!file_exists($filename)) {
             rename(base_path().$this->filepath, $filename);

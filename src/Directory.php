@@ -1,9 +1,11 @@
 <?php
+/**
+ * 디렉터리 목록을 HTML 테그로 생성합니다.
+ */
 namespace Jiny\Filesystem;
 
 use \Jiny\Html\CTag;
 
-// 디렉터리를 Html Ul 테그로 생성합니다.
 class Directory
 {
     public $dir=[];
@@ -14,38 +16,42 @@ class Directory
         $this->path = $path;
     }
 
+    ## 출력 디렉터리 설정
     public function setPath($path)
     {
         $this->path = $path;
         return $this;
     }
 
+    ## 디렉터리 목록읽기
     public function scan($path=null)
     {
         if($path) $this->path = $path;
 
         $base = base_path().$this->path;
-        //dd($base);
         if(file_exists($base) && is_dir($base)) {
-
             $this->dir = xScanDir($this->path);
         }
         return $this;
     }
 
+    ## 생성목 html 목록을 출력합니다.
     public function html($tree=[])
     {
         // 데이터 초기화
         if(empty($tree)) $tree = $this->dir;
-        $ul = $this->makeTree($tree);
 
+        // 재귀호출 트리 만들기
+        $tree = $this->makeTree($tree);
+
+        // dropzone 영역 추가하기
         $__li = xLi();
         $__li->addClass("dropzone");
         $__li->setAttribute("data-path", $this->path);
         $__li->addItem("+ 여기에 파일을 올려 놓으세요.");
-        $ul->addItem($__li);
+        $tree->addItem($__li);
 
-        return $ul;
+        return $tree;
     }
 
     public function makeTree($tree)
@@ -69,7 +75,7 @@ class Directory
         return $ul;
     }
 
-    // 출력형태 지정
+    ## 목록셀 출력형태 지정
     public function item($item)
     {
         $info = pathinfo( base_path().$item['path'] );
@@ -171,10 +177,11 @@ class Directory
 
         return $icon;
     }
-    public function btnLinkCopy($item)
+
+    private function btnLinkCopy($item)
     {
         $external = xSpan();
-            $external->addHtml('<svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            $external->addHtml('<svg xmlns="http://www.w3.org/2000/svg" width="12px" height="12px" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
             </svg>')->addClass("px-2");
 

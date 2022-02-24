@@ -9,11 +9,17 @@
         @endif
         <!-- end page title -->
 
-
-        <!-- dropzone -->
-        <x-dropzone path="images/themes">
-            Dropzone
-        </x-dropzone>
+        <x-card>
+            <x-card-header>
+                path : public/images
+            </x-card-header>
+            <x-card-body>
+                <!-- dropzone -->
+                <x-dropzone path="public/images">
+                    Dropzone
+                </x-dropzone>
+            </x-card-body>
+        </x-card>
 
 
 

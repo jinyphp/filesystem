@@ -19,18 +19,9 @@ class DropzoneController extends ResourceController
         parent::__construct();
         $this->setVisit($this);
 
-        ##
-        $this->actions['table'] = "site_theme_store"; // 테이블 정보
-        $this->actions['paging'] = 10; // 페이지 기본값
-
         $this->actions['view_main'] = "jinyfile::admin.dropzone.main";
-        $this->actions['view_main_layout'] = "jinyfile::admin.dropzone.main_layout";
-        $this->actions['view_list'] = "jinyfile::admin.dropzone.tile";
-        $this->actions['view_form'] = "jinyfile::admin.dropzone.form";
+
     }
-
-
-
 
 
 }

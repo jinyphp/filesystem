@@ -13,7 +13,7 @@
                 <x-form-label>활성화</x-form-label>
                 <x-form-item>
                     {!! xCheckbox()
-                        ->setWire('model.defer',"form.enable")
+                        ->setWire('model.defer',"forms.enable")
                     !!}
                 </x-form-item>
             </x-form-hor>
@@ -22,7 +22,7 @@
                 <x-form-label>제목</x-form-label>
                 <x-form-item>
                     {!! xInputText()
-                        ->setWire('model.defer',"form.title")
+                        ->setWire('model.defer',"forms.title")
                         ->setWidth("standard")
                     !!}
                 </x-form-item>
@@ -32,7 +32,7 @@
                 <x-form-label>부제목</x-form-label>
                 <x-form-item>
                     {!! xTextarea()
-                        ->setWire('model.defer',"form.subtitle")
+                        ->setWire('model.defer',"forms.subtitle")
                     !!}
                 </x-form-item>
             </x-form-hor>
@@ -41,7 +41,7 @@
                 <x-form-label>작성자</x-form-label>
                 <x-form-item>
                     {!! xInputText()
-                        ->setWire('model.defer',"form.author")
+                        ->setWire('model.defer',"forms.author")
                         ->setWidth("standard")
                     !!}
                 </x-form-item>
@@ -51,7 +51,7 @@
                 <x-form-label>이메일</x-form-label>
                 <x-form-item>
                     {!! xInputText()
-                        ->setWire('model.defer',"form.email")
+                        ->setWire('model.defer',"forms.email")
                         ->setWidth("standard")
                     !!}
                 </x-form-item>
@@ -61,7 +61,7 @@
                 <x-form-label>내용</x-form-label>
                 <x-form-item>
                     {!! xTextarea()
-                        ->setWire('model.defer',"form.content")
+                        ->setWire('model.defer',"forms.content")
 
                     !!}
                 </x-form-item>
@@ -80,7 +80,7 @@
                 <x-form-label>code</x-form-label>
                 <x-form-item>
                     {!! xInputText()
-                        ->setWire('model.defer',"form.code")
+                        ->setWire('model.defer',"forms.code")
                         ->setWidth("standard")
                     !!}
                 </x-form-item>
@@ -90,7 +90,7 @@
                 <x-form-label>Vendor</x-form-label>
                 <x-form-item>
                     {!! xInputText()
-                        ->setWire('model.defer',"form.vendor")
+                        ->setWire('model.defer',"forms.vendor")
                         ->setWidth("standard")
                     !!}
                 </x-form-item>
@@ -100,7 +100,7 @@
                 <x-form-label>테마명</x-form-label>
                 <x-form-item>
                     {!! xInputText()
-                        ->setWire('model.defer',"form.name")
+                        ->setWire('model.defer',"forms.name")
                         ->setWidth("standard")
                     !!}
                 </x-form-item>
@@ -110,7 +110,7 @@
                 <x-form-label>Download Url</x-form-label>
                 <x-form-item>
                     {!! xInputText()
-                        ->setWire('model.defer',"form.url")
+                        ->setWire('model.defer',"forms.url")
                         ->setWidth("standard")
                     !!}
                 </x-form-item>
@@ -138,7 +138,7 @@
                         x-on:livewire-upload-progress="progress = $event.detail.progress"
                     >
                         <!-- File Input -->
-                        <input type="file" name="filename" wire:model.defer="form.image" class="form-control"/>
+                        <input type="file" name="filename" wire:model.defer="forms.image" class="form-control"/>
 
                         <!-- Progress Bar -->
                         <div x-show="isUploading">
@@ -157,7 +157,7 @@
                 <x-form-label>version</x-form-label>
                 <x-form-item>
                     {!! xInputText()
-                        ->setWire('model.defer',"form.version")
+                        ->setWire('model.defer',"forms.version")
                         ->setWidth("standard")
                     !!}
                 </x-form-item>
@@ -167,7 +167,7 @@
                 <x-form-label>css</x-form-label>
                 <x-form-item>
                     {!! xInputText()
-                        ->setWire('model.defer',"form.css")
+                        ->setWire('model.defer',"forms.css")
                         ->setWidth("standard")
                     !!}
                 </x-form-item>
@@ -186,7 +186,7 @@
                 <x-form-label>카테고리</x-form-label>
                 <x-form-item>
                     {!! xInputText()
-                        ->setWire('model.defer',"form.category")
+                        ->setWire('model.defer',"forms.category")
                         ->setWidth("standard")
                     !!}
                 </x-form-item>
@@ -196,7 +196,7 @@
                 <x-form-label>가격</x-form-label>
                 <x-form-item>
                     {!! xInputText()
-                        ->setWire('model.defer',"form.price")
+                        ->setWire('model.defer',"forms.price")
                         ->setWidth("standard")
                     !!}
                 </x-form-item>
@@ -206,7 +206,7 @@
                 <x-form-label>메모</x-form-label>
                 <x-form-item>
                     {!! xTextarea()
-                        ->setWire('model.defer',"form.description")
+                        ->setWire('model.defer',"forms.description")
                     !!}
                 </x-form-item>
             </x-form-hor>

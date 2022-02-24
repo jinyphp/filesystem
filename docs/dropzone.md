@@ -8,7 +8,7 @@ drag and upload 기능은 css와 javascript 코드를 같이 사용해야 합니
 drag 한 파일을 업로드 할 수 있도록 dropzone 영역을 설정합니다. blade 코드에서 x-dropzone 테그를 사용하빈다.
 
 ```php
-<x-dropzone path="aaa">
+<x-dropzone>
     Dropzone
 </x-dropzone>
 ```
@@ -19,9 +19,9 @@ drag 한 파일을 업로드 할 수 있도록 dropzone 영역을 설정합니�
 x-dropzone 테그 사용시 path 속성을 추가하면, 설정한 경로로 파일을 업로드 합니다.
 
 ```php
-<x-dropzone class="p-4" path="{{public_path('images/themes')}}">
-            Dropzone
-        </x-dropzone>
+<x-dropzone class="p-4" path="public/images">
+    Dropzone
+</x-dropzone>
 ```
 
 `public/images` 폴더에 파일이 업로드 됩니다.

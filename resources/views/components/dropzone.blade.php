@@ -12,13 +12,9 @@
     <style>
         .dropzone {
             width: 100%;
-            /*
             height: 100px;
-
-
             line-height: 100px;
             text-align: center;
-            */
             color: #333;
             border:1px dashed #ccc;
             background-color: rgb(250,250,250);
@@ -32,7 +28,7 @@
             border-color:#333;
             /* background-color: #6990F2; */
             background-color: rgb(240,240,240);
-            //color:#000;
+            color:#000;
         }
 
 
